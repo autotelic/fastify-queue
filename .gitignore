@@ -104,4 +104,4 @@ dist
 .tern-port
 
 # Lockfiles
-package-lock
+package-lock.json
