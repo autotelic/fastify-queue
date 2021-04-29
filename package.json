@@ -1,0 +1,37 @@
+{
+  "name": "fastify-queue",
+  "version": "0.0.0",
+  "description": "an async queue for fastify",
+  "keywords": [
+    "fastify",
+    "plugin",
+    "queue"
+  ],
+  "bugs": {
+    "url": "https://github.com/autotelic/fastify-queue/issues"
+  },
+  "homepage": "https://github.com/autotelic/fastify-queue#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "fix": "npm run lint -- --fix",
+    "lint": "standard",
+    "test": "tap --100 -j1 -R classic test/*.test.js",
+    "validate": "npm run lint && npm run test"
+  },
+  "devDependencies": {
+    "fastify": "^3.15.0",
+    "lint-staged": "^10.5.4",
+    "standard": "^16.0.3",
+    "tap": "^15.0.5"
+  },
+  "dependencies": {
+    "fastify-plugin": "^3.0.0",
+    "p-props": "^4.0.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "npm run fix"
+    ]
+  }
+}
