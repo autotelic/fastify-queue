@@ -10,14 +10,14 @@ npm i @autotelic/fastify-queue
 
 ```js
 function myRoute (fastify, opts) {
-  fastify.register(fastifyQueue, {
-    initiator: async (key, value, reply) => {
-      return reply.myAsyncAction(value)
-    }
-  })
+  fastify.register(fastifyQueue)
 
   fastify.post('/example', async (request, reply) => {
-    reply.queue.add('myItem', request.body)
+    reply.queue.add('async-action-one', reply.asyncAction())
+    reply.queue.add('async-action-two', reply.asyncActionTwo())
+    reply.queue.add('async-action-three', reply.asyncActionThree())
+    // Manual resolution optional - queue will otherwise resolve in onResponse hook.
+    const results = await reply.queue.resolve()
     reply.status(200)
   })
 }
