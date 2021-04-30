@@ -1,5 +1,5 @@
 {
-  "name": "fastify-queue",
+  "name": "@autotelic/fastify-queue",
   "version": "0.1.0",
   "description": "an async queue for fastify",
   "keywords": [
