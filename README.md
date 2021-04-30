@@ -9,6 +9,8 @@ npm i @autotelic/fastify-queue
 #### Example
 
 ```js
+const fastifyQueue = require('@autotelic/fastify-queue')
+
 function myRoute (fastify, opts) {
   fastify.register(fastifyQueue)
 
