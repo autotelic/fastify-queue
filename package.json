@@ -10,6 +10,7 @@
   "bugs": {
     "url": "https://github.com/autotelic/fastify-queue/issues"
   },
+  "files": [],
   "homepage": "https://github.com/autotelic/fastify-queue#readme",
   "license": "MIT",
   "main": "index.js",
