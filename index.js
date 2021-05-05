@@ -52,8 +52,8 @@ async function fastifyQueue (fastify, options) {
   })
 
   fastify.addHook('onResponse', async (request, reply) => {
-    const queue = reply[queueName]
-    if (!queue[kIsResolved]) {
+    const queue = reply[queueName] || {}
+    if (queue[kIsResolved] === false) {
       await queue.resolve()
     }
   })

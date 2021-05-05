@@ -122,3 +122,30 @@ test('manually resolving queue', async ({ equal, same }) => {
   await asyncTimeout(60)
   equal(onResolvedCalls, 1, 'onResponse hook should not call resolve if queue has already resolved.')
 })
+
+test('skipped onRequest hook', async ({ equal, same }) => {
+  const fastify = require('fastify')()
+  // This plugin's onRequest hook will trigger before ours and send a reply -
+  // thereby skipping our request hook but still triggering our onResponse hook.
+  fastify.register((fastify, opts, done) => {
+    fastify.addHook('onRequest', (req, reply) => {
+      reply
+        .code(204)
+        .header('Content-Length', '0')
+        .send()
+    })
+    fastify.get('/', (req, reply) => {
+      console.log(reply.queue)
+      reply.send()
+    })
+    done()
+  })
+  fastify.register(fastifyQueue)
+  const errors = []
+  fastify.log.error = (obj) => { errors.push(obj.err) }
+  await fastify.ready()
+  equal(fastify.hasReplyDecorator('queue'), true, 'should decorate reply with queue')
+  const res = await fastify.inject({ url: '/' })
+  equal(res.statusCode, 204)
+  same(errors, [], 'onResponse hook should be able to handle a null reply.queue')
+})
