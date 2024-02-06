@@ -1,7 +1,5 @@
-'use strict'
-
-const fp = require('fastify-plugin')
-const pProps = require('p-props')
+import fp from 'fastify-plugin'
+import pProps from 'p-props'
 
 const kIsResolved = Symbol.for('fastify-queue.isResolved')
 const kContents = Symbol.for('fastify-queue.contents')
@@ -59,4 +57,4 @@ async function fastifyQueue (fastify, options) {
   })
 }
 
-module.exports = fp(fastifyQueue, { name: 'fastify-queue' })
+export default fp(fastifyQueue, { name: 'fastify-queue' })

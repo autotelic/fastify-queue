@@ -1,12 +1,14 @@
-'use strict'
+import { promisify } from 'util'
 
-const { test } = require('tap')
-const fastifyQueue = require('../')
-const { promisify } = require('util')
+import Fastify from 'fastify'
+import { test } from 'tap'
+
+import fastifyQueue from '../index.js'
+
 const asyncTimeout = promisify(setTimeout)
 
 function buildApp (handler, opts = {}) {
-  const fastify = require('fastify')()
+  const fastify = Fastify()
   fastify.register(fastifyQueue, opts)
   fastify.get('/', handler)
   return fastify
@@ -124,7 +126,7 @@ test('manually resolving queue', async ({ equal, same }) => {
 })
 
 test('skipped onRequest hook', async ({ equal, same }) => {
-  const fastify = require('fastify')()
+  const fastify = Fastify()
   // This plugin's onRequest hook will trigger before ours and send a reply -
   // thereby skipping our request hook but still triggering our onResponse hook.
   fastify.register((fastify, opts, done) => {

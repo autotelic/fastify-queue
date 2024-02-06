@@ -1,0 +1,8 @@
+{
+  "extends": ["@autotelic/eslint-config-js"],
+  "settings": {
+    "node": {
+      "version": "^20.x"
+    }
+  }
+}
