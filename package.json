@@ -2,6 +2,7 @@
   "name": "@autotelic/fastify-queue",
   "version": "0.1.2",
   "description": "an async queue for fastify",
+  "type": "module",
   "keywords": [
     "fastify",
     "plugin",
@@ -16,22 +17,23 @@
   "main": "index.js",
   "scripts": {
     "fix": "npm run lint -- --fix",
-    "lint": "standard",
-    "test": "tap --100 -j1 -R classic test/*.test.js",
+    "lint": "eslint .",
+    "test": "tap --show-full-coverage",
     "validate": "npm run lint && npm run test"
   },
   "devDependencies": {
-    "fastify": "^3.15.0",
-    "lint-staged": "^10.5.4",
-    "standard": "^16.0.3",
-    "tap": "^15.0.5"
+    "@autotelic/eslint-config-js": "^0.3.0",
+    "eslint": "^8.56.0",
+    "fastify": "^4.26.0",
+    "lint-staged": "^15.2.2",
+    "tap": "^18.7.0"
   },
   "dependencies": {
-    "fastify-plugin": "^3.0.0",
-    "p-props": "^4.0.0"
+    "fastify-plugin": "^4.5.1",
+    "p-props": "^6.0.0"
   },
   "lint-staged": {
-    "*.{js,jsx}": [
+    "*.{js}": [
       "npm run fix"
     ]
   }
