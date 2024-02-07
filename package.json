@@ -1,6 +1,6 @@
 {
   "name": "@autotelic/fastify-queue",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "an async queue for fastify",
   "type": "module",
   "types": "index.d.ts",
