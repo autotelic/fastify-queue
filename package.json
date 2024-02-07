@@ -3,6 +3,7 @@
   "version": "0.1.2",
   "description": "an async queue for fastify",
   "type": "module",
+  "types": "index.d.ts",
   "keywords": [
     "fastify",
     "plugin",
@@ -11,29 +12,38 @@
   "bugs": {
     "url": "https://github.com/autotelic/fastify-queue/issues"
   },
-  "files": [],
+  "files": [
+    "index.d.ts"
+  ],
   "homepage": "https://github.com/autotelic/fastify-queue#readme",
   "license": "MIT",
   "main": "index.js",
   "scripts": {
     "fix": "npm run lint -- --fix",
     "lint": "eslint .",
-    "test": "tap --show-full-coverage",
-    "validate": "npm run lint && npm run test"
+    "test": "tap ./test/*.test.js --show-full-coverage",
+    "tsd": "tsd --files ./test/index.test-d.ts",
+    "validate": "npm run lint && npm run test && npm run tsd",
+    "prepare": "husky || true"
   },
   "devDependencies": {
     "@autotelic/eslint-config-js": "^0.3.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
     "eslint": "^8.56.0",
     "fastify": "^4.26.0",
+    "husky": "^9.0.10",
     "lint-staged": "^15.2.2",
-    "tap": "^18.7.0"
+    "tap": "^18.7.0",
+    "tsd": "^0.30.4",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
     "fastify-plugin": "^4.5.1",
     "p-props": "^6.0.0"
   },
   "lint-staged": {
-    "*.{js}": [
+    "*.{js,ts}": [
       "npm run fix"
     ]
   }

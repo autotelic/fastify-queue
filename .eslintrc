@@ -4,5 +4,15 @@
     "node": {
       "version": "^20.x"
     }
-  }
+  },
+  "overrides": [{
+    "files": ["*.ts"],
+    "extends": [
+      "@autotelic/eslint-config-js",
+      "plugin:@typescript-eslint/eslint-recommended",
+      "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"]
+  }]
 }
