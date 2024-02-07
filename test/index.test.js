@@ -105,13 +105,18 @@ test('error handling', async ({ equal, same }) => {
 test('manually resolving queue', async ({ equal, same }) => {
   const routeHandler = async (req, reply) => {
     same(reply.queue.contents, new Map())
-    reply.queue.add('foo', 'bar')
-    same(reply.queue.contents, new Map([['foo', 'bar']]))
+    const bar = new Promise((resolve) => resolve('bar'))
+    reply.queue.add('foo', bar)
+    same(reply.queue.contents, new Map([['foo', bar]]))
     await reply.queue.resolve()
     return {}
   }
+
   let onResolvedCalls = 0
-  const onResolved = () => {
+  let resolvedQueue
+
+  const onResolved = (queue) => {
+    resolvedQueue = queue
     onResolvedCalls++
   }
   const app = buildApp(routeHandler, { onResolved })
@@ -123,6 +128,7 @@ test('manually resolving queue', async ({ equal, same }) => {
   // payloads to accumulate.
   await asyncTimeout(60)
   equal(onResolvedCalls, 1, 'onResponse hook should not call resolve if queue has already resolved.')
+  same(resolvedQueue, new Map([['foo', 'bar']]))
 })
 
 test('skipped onRequest hook', async ({ equal, same }) => {
