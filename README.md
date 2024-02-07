@@ -9,7 +9,7 @@ npm i @autotelic/fastify-queue
 #### Example
 
 ```js
-const fastifyQueue = require('@autotelic/fastify-queue')
+import fastifyQueue from '@autotelic/fastify-queue'
 
 function myRoute (fastify, opts) {
   fastify.register(fastifyQueue)
@@ -31,16 +31,16 @@ function myRoute (fastify, opts) {
 
 fastify-queue accepts the following *optional* configuration:
 
- - #### `initializer`: `(key: string, value: any, reply: FastifyReply) => any | Promise<any>`
+ - #### `initializer`: `(key: PropertyKey, value: unknown, reply: FastifyReply) => unknown | Promise<unknown>`
    - Called each time an item is added to the queue. The value returned will be the value added to the queue.
 
- - #### `resolver`: `(key: string, value: any, reply: FastifyReply) => any`
+ - #### `resolver`: `(key: PropertyKey, value: unknown, reply: FastifyReply) => unknown | PromiseLike<unknown>`
    - Called each time an item in the queue is resolved. `value` is the resolved value of an item in the queue.
 
- - #### `onError`: `(error: Error, reply: FastifyReply) => any`
+ - #### `onError`: `(error: Error, reply: FastifyReply) => void`
    - Called if an error occurs while resolving the queue. Defaults to `fastify.log.error(error)`.
 
-- #### `onResolved`: `(result: any, reply: FastifyReply) => void`
+- #### `onResolved`: `(result: Map<PropertyKey, unknown>, reply: FastifyReply) => void | Promise<void>`
   - Called after the queue has successfully resolved. `result` is the resolved queue.
 
 - #### `queueName`: `string`
@@ -59,12 +59,14 @@ fastify-queue accepts the following *optional* configuration:
 
 fastify-queue adds a `queue` (or the value of `opts.queueName`) reply decorator containing the following properties:
 
-- #### `add`: `(key: string, value: any) => void`
+- #### `add`: `(key: PropertyKey, value: unknown) => void`
   - Used to add items to the queue.
 
-- #### `resolve`: `(cb?: (result: any, reply: FastifyReply) => void) => void`
-  - Used to manually resolve the queue. `cb` defaults to `opts.onResolved`.
+- #### `resolve`: `(cb?: typeof opts.onResolved) => Promise<void>`
+  - Used to manually resolve the queue. `cb` defaults to `opts.onResolved` 
+  - If `cb` is provided it will be called instead of `opts.onResolved`
+  - `result` param of `cb` is the resolved queue
   - fastify-queue will automatically resolve the queue in an `onResponse` hook, if this has not already been called.
 
-- #### `contents`: `Map`
+- #### `contents`: `Map<PropertyKey, unknown>`
   - The queue `Map` instance.
